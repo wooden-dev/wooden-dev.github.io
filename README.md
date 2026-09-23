@@ -31,8 +31,7 @@ The Paper Birds application repository was inspected read-only and not modified.
 
 The root represents WoodenDev. Each product uses `/<product>/`,
 `/<product>/support/`, and `/<product>/privacy/` relative to the site's base URL.
-These are site-relative routes, not assumptions about the domain root.
-Links in HTML are document-relative so a GitHub project-site prefix works.
+Links in HTML are document-relative.
 
 ## Preview locally
 
@@ -47,61 +46,34 @@ and `/paperbirds/privacy/`. Stop the server with Ctrl+C. No build is required.
 
 ## Deployment status and actual production URLs
 
-**Not deployed; no verified production URL as of 23 September 2026.**
-
-Read-only GitHub API checks established:
-
-- Repository: `wooden-dev/woodendev.github.io`, public, default branch `main`.
-- Repository response: `has_pages: false`.
-- Pages configuration endpoint: HTTP 404; no published `html_url` returned.
-- The currently authenticated CLI account has pull access, but no push or admin
-  permission. Publishing and changing Pages settings require an authorized account.
-- No repository was renamed or created. No deployment was performed.
+GitHub's Pages API reports `https://wooden-dev.github.io/` as the published base
+URL for the public `wooden-dev/wooden-dev.github.io` repository. Its source is
+`main` at `/ (root)`, HTTPS is enforced, and Pages status is `built`. This
+configuration was checked on 23 September 2026. GitHub's report verifies the
+base URL; it does not by itself prove that the current local commit is live.
 
 | Page | Actual production URL | Submission status |
 | --- | --- | --- |
-| WoodenDev | Not yet assigned/verified | Not deployed |
-| Paper Birds marketing | Not yet assigned/verified | NOT READY |
-| Paper Birds support | Not yet assigned/verified | NOT READY |
-| Paper Birds privacy | Not yet assigned/verified | NOT READY |
+| WoodenDev | `https://wooden-dev.github.io/` | Pages configured |
+| Paper Birds marketing | `https://wooden-dev.github.io/paperbirds/` | Verify after push |
+| Paper Birds support | `https://wooden-dev.github.io/paperbirds/support/` | Verify after push |
+| Paper Birds privacy | `https://wooden-dev.github.io/paperbirds/privacy/` | Verify after push |
 
-Under GitHub's default project-site rules, the **expected, unverified** base is
-`https://wooden-dev.github.io/woodendev.github.io/`. With that base, expected routes are:
-
-- Marketing: `https://wooden-dev.github.io/woodendev.github.io/paperbirds/`
-- Support: `https://wooden-dev.github.io/woodendev.github.io/paperbirds/support/`
-- Privacy: `https://wooden-dev.github.io/woodendev.github.io/paperbirds/privacy/`
-
-Do not submit these until GitHub reports the actual URL and public HTTPS checks pass.
-A user site for `wooden-dev` requires a repository named `wooden-dev.github.io`,
-which would give `https://wooden-dev.github.io/`, not `https://woodendev.github.io/`.
-The requested current repository can be used as a project site without renaming it.
-A rename or new repository requires the owner's explicit approval.
-See [GitHub's site types and URL rules](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
+Do not submit the product URLs until the current commit is published and each
+direct URL works anonymously over HTTPS. See [GitHub's site types and URL
+rules](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 
 ### Exact Pages settings
 
-After resolving release TODOs and pushing the site to `main` using an account with write access:
+The configured settings are **Deploy from a branch → main → / (root)** with
+**Enforce HTTPS** on. No custom Actions workflow is needed. `.nojekyll` lets
+GitHub serve these files directly. Check the configuration with
+`gh api repos/wooden-dev/wooden-dev.github.io/pages`. After a push, test the
+base and all three Paper Birds URLs, navigation, CSS, videos, and posters
+anonymously over HTTPS.
 
-1. Open this repository's **Settings → Pages**.
-2. Under **Build and deployment**, select **Deploy from a branch**.
-3. Select branch **main**, folder **/ (root)**, and **Save**.
-4. Leave **Custom domain** empty unless a separately verified domain is intended.
-5. Enable **Enforce HTTPS** when available.
-6. Wait for GitHub to report the published URL. No custom GitHub Actions workflow is
-   necessary. `.nojekyll` lets GitHub serve these static files directly.
-7. Query `gh api repos/wooden-dev/woodendev.github.io/pages` and record its `html_url`.
-8. Test the base URL, all three Paper Birds URLs, navigation, CSS, and every image
-   anonymously over HTTPS, including direct navigation to support and privacy.
-9. Add a canonical URL and `og:url` to each HTML head using that verified base.
-   For Paper Birds pages, add an absolute `og:image` URL using the verified base
-   plus `paperbirds/images/forest.jpg`, with an accurate image description. For
-   WoodenDev, use its own appropriate brand image or omit `og:image`.
-10. Replace this status table with the actual URLs and completed verification date.
-
-Canonical URLs, `og:url`, and absolute Open Graph images are deliberately omitted
-until the production base is confirmed. Titles, descriptions, Open Graph titles and
-descriptions, viewport metadata, language, and favicons are already present.
+Canonical URLs and Open Graph URLs in each HTML page use the verified base.
+Paper Birds pages use the real Forest poster as their social image.
 
 ## Flight videos and assets
 
@@ -229,11 +201,11 @@ Create `<product>/index.html`, `<product>/support/index.html`,
 root branding assets. Copy the relative navigation pattern at the corresponding
 directory depth. Add a product card inside `#products` on the WoodenDev root page.
 Write a distinct support page and privacy policy for that product, verify its own
-claims, and add canonical metadata only using the confirmed deployment base.
+claims, and add canonical metadata using the confirmed deployment base.
 
 ## Before App Store Submission
 
-- [ ] Actual GitHub Pages URL verified
+- [x] Actual GitHub Pages base URL verified by GitHub's Pages API
 - [ ] Marketing URL works publicly
 - [ ] Support URL works publicly
 - [ ] Privacy Policy URL works publicly
@@ -246,7 +218,7 @@ claims, and add canonical metadata only using the confirmed deployment base.
 - [ ] Copyright owner/year verified
 - [ ] No TODO placeholders remain on public pages
 - [ ] App Store availability and free base price verified; real download link added
-- [ ] Canonical URLs and appropriate absolute Open Graph image added
+- [x] Canonical URLs and appropriate absolute Open Graph image added
 
 Marketing URL: **NOT READY**. Support URL: **NOT READY**.
 Privacy Policy URL: **NOT READY**. The site is a locally reviewable implementation,
@@ -259,8 +231,8 @@ not a claim of deployment or App Store submission readiness.
 - A static HTML check resolved all 72 internal links, asset references, and anchors;
   every image includes alternative text and intrinsic dimensions. This describes the initial static site; video-update checks are recorded below.
 - Product and privacy layouts inspected visually; desktop and mobile CSS checked.
-- No public HTTPS/deployment checks are claimed. Public verification remains blocked
-  by disabled Pages and missing repository write/admin access.
+- The Pages API confirms the user-site configuration. Public verification of
+  this local commit remains pending until it is pushed and deployed.
 
 ### Video update validation — 23 September 2026
 
