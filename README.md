@@ -54,13 +54,14 @@ base URL; it does not by itself prove that the current local commit is live.
 
 | Page | Actual production URL | Submission status |
 | --- | --- | --- |
-| WoodenDev | `https://wooden-dev.github.io/` | Pages configured |
-| Paper Birds marketing | `https://wooden-dev.github.io/paperbirds/` | Verify after push |
-| Paper Birds support | `https://wooden-dev.github.io/paperbirds/support/` | Verify after push |
-| Paper Birds privacy | `https://wooden-dev.github.io/paperbirds/privacy/` | Verify after push |
+| WoodenDev | `https://wooden-dev.github.io/` | HTTPS verified |
+| Paper Birds marketing | `https://wooden-dev.github.io/paperbirds/` | HTTPS verified; App Store review pending |
+| Paper Birds support | `https://wooden-dev.github.io/paperbirds/support/` | HTTPS verified; App Store review pending |
+| Paper Birds privacy | `https://wooden-dev.github.io/paperbirds/privacy/` | HTTPS verified; shipping-build review pending |
 
-Do not submit the product URLs until the current commit is published and each
-direct URL works anonymously over HTTPS. See [GitHub's site types and URL
+Each direct URL and the principal CSS, JavaScript, images, and videos returned
+HTTP 200 over public HTTPS after the site deployed on 23 September 2026. App Store
+submission still depends on the release checks below. See [GitHub's site types and URL
 rules](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 
 ### Exact Pages settings
@@ -206,23 +207,23 @@ claims, and add canonical metadata using the confirmed deployment base.
 ## Before App Store Submission
 
 - [x] Actual GitHub Pages base URL verified by GitHub's Pages API
-- [ ] Marketing URL works publicly
-- [ ] Support URL works publicly
-- [ ] Privacy Policy URL works publicly
+- [x] Marketing URL works publicly
+- [x] Support URL works publicly
+- [x] Privacy Policy URL works publicly
 - [x] Placeholder support email replaced with woodendev@gmail.com
 - [x] Actual 3-second renderer videos and matching posters added, including Classic and City 2
 - [ ] Media approved against the final shipping build
 - [x] Expanded Flight content accurately identified against current source
 - [ ] Privacy Policy verified against shipping build
-- [ ] All internal links tested on public deployment (local checks completed)
+- [x] Internal links and principal assets tested on public deployment
 - [ ] Copyright owner/year verified
 - [ ] No TODO placeholders remain on public pages
 - [ ] App Store availability and free base price verified; real download link added
 - [x] Canonical URLs and appropriate absolute Open Graph image added
 
 Marketing URL: **NOT READY**. Support URL: **NOT READY**.
-Privacy Policy URL: **NOT READY**. The site is a locally reviewable implementation,
-not a claim of deployment or App Store submission readiness.
+Privacy Policy URL: **NOT READY**. The website is deployed; App Store submission
+still needs the final release checks listed above.
 
 ## Local validation completed
 
@@ -231,8 +232,8 @@ not a claim of deployment or App Store submission readiness.
 - A static HTML check resolved all 72 internal links, asset references, and anchors;
   every image includes alternative text and intrinsic dimensions. This describes the initial static site; video-update checks are recorded below.
 - Product and privacy layouts inspected visually; desktop and mobile CSS checked.
-- The Pages API confirms the user-site configuration. Public verification of
-  this local commit remains pending until it is pushed and deployed.
+- The Pages API confirms the user-site configuration, and public HTTPS checks
+  confirmed all four routes and the principal static assets after deployment.
 
 ### Video update validation — 23 September 2026
 
