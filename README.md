@@ -2,7 +2,7 @@
 
 A lightweight, multi-product website for WoodenDev, with a dedicated Paper Birds
 marketing page, support page, and privacy policy. Plain HTML and shared CSS;
-no JavaScript, build step, package manager, cookies, analytics, or external fonts.
+no build step, package manager, cookies, analytics, or external fonts. A small local JavaScript file manages visible video playback and reduced-motion preferences.
 The Paper Birds application repository was inspected read-only and not modified.
 
 ## Directory structure
@@ -12,23 +12,21 @@ The Paper Birds application repository was inspected read-only and not modified.
 ├── .nojekyll
 ├── README.md
 ├── index.html
-├── css/
-│   └── style.css
-├── images/
-│   └── favicon.svg
+├── css/style.css
+├── js/previews.js
+├── images/favicon.svg
+├── tools/
+│   ├── export-previews.sh
+│   └── export-previews.swift
 └── paperbirds/
     ├── index.html
-    ├── support/
-    │   └── index.html
-    ├── privacy/
-    │   └── index.html
-    └── images/
-        ├── app-icon.png
-        ├── hero.jpg
-        ├── forest.jpg
-        ├── winter.jpg
-        ├── city.jpg
-        └── village.jpg
+    ├── support/index.html
+    ├── privacy/index.html
+    ├── images/
+    │   ├── app-icon.png
+    │   └── {classic,forest,city,city2-chase,city2-overhead,village,winter}.jpg
+    └── videos/
+        └── {classic,forest,city,city2-chase,city2-overhead,village,winter}.mp4
 ```
 
 The root represents WoodenDev. Each product uses `/<product>/`,
@@ -97,7 +95,7 @@ After resolving release TODOs and pushing the site to `main` using an account wi
    anonymously over HTTPS, including direct navigation to support and privacy.
 9. Add a canonical URL and `og:url` to each HTML head using that verified base.
    For Paper Birds pages, add an absolute `og:image` URL using the verified base
-   plus `paperbirds/images/hero.jpg`, with an accurate image description. For
+   plus `paperbirds/images/forest.jpg`, with an accurate image description. For
    WoodenDev, use its own appropriate brand image or omit `og:image`.
 10. Replace this status table with the actual URLs and completed verification date.
 
@@ -105,49 +103,66 @@ Canonical URLs, `og:url`, and absolute Open Graph images are deliberately omitte
 until the production base is confirmed. Titles, descriptions, Open Graph titles and
 descriptions, viewport metadata, language, and favicons are already present.
 
-## Screenshots and assets
+## Flight videos and assets
 
-No fabricated application screenshots or generated replacement scenery are used.
-The app icon is a copy of `App/Assets.xcassets/AppIcon.appiconset/icon_256x256@1x.png`
-in Paper Birds. The original asset was not changed.
+Seven actual renderer captures replace the screenshot gallery, including the
+previously missing free Classic scene. Each video is a silent, 3-second H.264 MP4,
+1280×720, 30 fps (90 frames), optimized for progressive playback. Matching JPEG
+posters display before playback or when reduced motion is enabled. MP4 preserves
+more color detail than GIF with smaller files for these scenes. Looping restarts
+at the beginning; these are natural flight excerpts, not seamless animation loops.
 
-The five 960×404 JPEGs are real stills exported from the app's bundled
-`App/Media/ExpandedFlightPreview.mp4`, not screenshots of the final shipping app.
-The exporter's scene list in `Tools/AppStore/PreviewMovie.swift` establishes provenance:
+The source is the real, unchanged Paper Birds renderer at commit
+`fdcfa7ac340ed56018ab6f231e9744ab1935c1e7`. No generated scenery, compositing,
+color grading, or application-source modification was used. Seed: `819274`.
+A contact sheet of 22 actual frames was inspected to select the Forest and City 2
+views. Configuration and start times:
 
-| Website image | Video time | Actual scene | Access |
-| --- | --- | --- | --- |
-| `hero.jpg` | 1 second | Forest, spring, triangle formation | Expanded Flight |
-| `forest.jpg` | 3 seconds | Forest, autumn, loose formation | Expanded Flight |
-| `winter.jpg` | 5 seconds | Forest, winter, V formation | Expanded Flight |
-| `city.jpg` | 7 seconds | City, summer, triangle formation | Expanded Flight |
-| `village.jpg` | 11 seconds | Village 2, summer, loose formation | Expanded Flight |
+| File stem | Scene | Camera | Season | Start time | Access |
+| --- | --- | --- | --- | --- | --- |
+| `classic` | Classic plains | Cinematic | Summer | 24 s | Free |
+| `forest` | Forest with moon reflected in lake | Chase | Summer | 12 s | Expanded Flight |
+| `city2-chase` | City 2 skyline with moon | Chase | Summer | 40 s | Expanded Flight |
+| `city2-overhead` | City 2 street grid and rooftops | Overhead | Summer | 40 s | Expanded Flight |
+| `city` | City building canyons | Chase | Summer | 24 s | Expanded Flight |
+| `village` | Village 2 | Cinematic | Summer | 24 s | Expanded Flight |
+| `winter` | Forest | Chase | Winter | 24 s | Expanded Flight |
 
-The pages explicitly call these preview stills and label the paid content.
-The original video and large development assets were not copied.
-Other inspected assets include the app's icon set, legacy saver thumbnails, and
-Expanded Flight promotional/review PNGs. Legacy saver thumbnails are not used as
-screenshots of the standalone app.
+Expanded captures use three birds, triangle formation, mixed colors, and trails.
+Classic uses two monochrome birds, loose formation, no trails, and the free
+cinematic camera. Forest density is 0.85 in expanded scenes and the free default of 1 in Classic.
+These are development renderer captures, not a claim that final storefront
+screenshots or the release archive have been approved. Verify them against the
+shipping version before submission. The icon is copied from
+`App/Assets.xcassets/AppIcon.appiconset/icon_256x256@1x.png`; its original is unchanged.
 
-Before release:
+`js/previews.js` plays muted videos only while they are visible, pauses when the
+page is hidden, honors the system reduced-motion preference, and provides a global
+Play/Pause previews button. Native controls remain usable with JavaScript disabled
+or autoplay blocked. No external player or tracking library is used.
 
-- Supply a genuine Classic plains screenshot from the free shipping app. Save as
-  `paperbirds/images/classic.jpg` and replace the labeled placeholder in the gallery
-  with an `<img>` and accurate `alt`, `width`, and `height` attributes.
-- Replace preview stills with final approved screenshots under the same filenames,
-  or update both paths and captions if scenes change. Keep paid-only labels.
-- Use reasonably compressed JPEGs and preserve aspect ratios. Update intrinsic
-  dimensions when replacing images. Do not upscale these preview frames.
-- Update hero/gallery copy and alt text to describe the final images; remove
-  “preview” and “screenshots to come” wording only when accurate.
+### Regenerating videos
+
+This is optional offline asset maintenance on macOS with Xcode and Metal, not a
+website build requirement. The exporter reads app sources without editing them:
+
+```sh
+bash tools/export-previews.sh /Users/woodenh/Documents/Development/private/PaperBirdsScreenSaver
+```
+
+It compiles the current app renderer into a temporary bundle, writes intermediate
+frames into a new temporary directory, and copies only MP4s and JPEG posters into
+this website. No ffmpeg or package manager is required. Inspect each video and
+poster after regenerating; future renderer changes may alter the composition.
+For manual replacement, retain filenames or update HTML source/poster paths,
+scene captions, access labels, and dimensions together.
 
 ## Support and release information
 
-**TODO: REPLACE BEFORE APP STORE SUBMISSION** — add the owner's real, monitored
-support email to both `paperbirds/support/index.html` and
-`paperbirds/privacy/index.html`. `support@example.com` exists only in TODO source
-comments as an explicitly fake placeholder; it is not rendered or linked.
-The visible contact section currently states that a public contact is forthcoming.
+Support and privacy contact: **woodendev@gmail.com**, provided by the owner.
+Both pages use working `mailto:` links; no fake contact placeholders remain.
+The privacy contact section explains that email inquiries disclose the sender's
+email address and the information they choose to send so a response can be provided.
 
 Add the verified App Store link on the marketing page when the listing is available.
 Replace the planned-release message with “Free download” only after checking live
@@ -196,15 +211,14 @@ The source scan alone is not a review of an eventual shipping archive.
   build configuration and existing release records.
 - The final shipping binary and included SDKs must be checked against this privacy
   policy. Current source supports the claims; future build changes may invalidate them.
-- Real contact address and copyright ownership remain owner-provided release items.
+- The contact email is owner-confirmed; copyright ownership remains to be confirmed.
 
 ## Updating privacy
 
 Recheck `docs/PRIVACY.md`, `App/PrivacyInfo.xcprivacy`, source networking/storage,
 package dependencies, bundled SDKs, and StoreKit handling against the exact shipping
 archive. Update `paperbirds/privacy/index.html` when practices change and revise its
-effective date. Adding email support may require describing how support messages
-are handled. Do not broaden “no app data collected” to cover Apple or the host.
+effective date. The contact section describes information received through email support. Do not broaden “no app data collected” to cover Apple or the host.
 GitHub Pages logs visitors' IP addresses for security; the website section states
 this separately. See [GitHub Pages data collection](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection).
 
@@ -223,8 +237,9 @@ claims, and add canonical metadata only using the confirmed deployment base.
 - [ ] Marketing URL works publicly
 - [ ] Support URL works publicly
 - [ ] Privacy Policy URL works publicly
-- [ ] Placeholder support email replaced
-- [ ] Final Paper Birds screenshots added
+- [x] Placeholder support email replaced with woodendev@gmail.com
+- [x] Actual 3-second renderer videos and matching posters added, including Classic and City 2
+- [ ] Media approved against the final shipping build
 - [x] Expanded Flight content accurately identified against current source
 - [ ] Privacy Policy verified against shipping build
 - [ ] All internal links tested on public deployment (local checks completed)
@@ -242,7 +257,20 @@ not a claim of deployment or App Store submission readiness.
 - All four pages opened in the browser at widths 1280, 375, and 320 pixels.
   No horizontal overflow; one H1 per page; visible images loaded.
 - A static HTML check resolved all 72 internal links, asset references, and anchors;
-  every image includes alternative text and intrinsic dimensions.
+  every image includes alternative text and intrinsic dimensions. This describes the initial static site; video-update checks are recorded below.
 - Product and privacy layouts inspected visually; desktop and mobile CSS checked.
 - No public HTTPS/deployment checks are claimed. Public verification remains blocked
   by disabled Pages and missing repository write/admin access.
+
+### Video update validation — 23 September 2026
+
+- All seven MP4 files verified with AVFoundation: 3.0 seconds, 1280×720,
+  approximately 30 fps, one video track, no audio track; complete sample reads.
+- All seven scenes decoded in the local browser with no media errors.
+- Verified visible playback, offscreen pausing, and the global pause/resume control.
+- Desktop (1280px) and mobile (375px) layouts inspected; no horizontal overflow.
+- All 92 local links, source references, posters, and anchors resolve.
+- Both contact pages link to `mailto:woodendev@gmail.com`; fake email removed.
+- Export shell syntax and `git diff --check` pass.
+- Reduced-motion handling is implemented; no system preference was changed during QA.
+- App repository remains unchanged; its pre-existing untracked note is untouched.
