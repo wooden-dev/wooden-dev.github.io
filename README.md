@@ -55,13 +55,13 @@ base URL; it does not by itself prove that the current local commit is live.
 | Page | Actual production URL | Submission status |
 | --- | --- | --- |
 | WoodenDev | `https://wooden-dev.github.io/` | HTTPS verified |
-| Paper Birds marketing | `https://wooden-dev.github.io/paperbirds/` | HTTPS verified; App Store review pending |
-| Paper Birds support | `https://wooden-dev.github.io/paperbirds/support/` | HTTPS verified; App Store review pending |
-| Paper Birds privacy | `https://wooden-dev.github.io/paperbirds/privacy/` | HTTPS verified; shipping-build review pending |
+| Paper Birds marketing | `https://wooden-dev.github.io/paperbirds/` | HTTPS verified; App Store linked |
+| Paper Birds support | `https://wooden-dev.github.io/paperbirds/support/` | HTTPS verified |
+| Paper Birds privacy | `https://wooden-dev.github.io/paperbirds/privacy/` | HTTPS verified; shipping-build review remains on checklist |
 
 Each direct URL and the principal CSS, JavaScript, images, and videos returned
-HTTP 200 over public HTTPS after the site deployed on 23 September 2026. App Store
-submission still depends on the release checks below. See [GitHub's site types and URL
+HTTP 200 over public HTTPS after the site deployed on 23 September 2026.
+See [GitHub's site types and URL
 rules](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 
 ### Exact Pages settings
@@ -137,9 +137,10 @@ Both pages use working `mailto:` links; no fake contact placeholders remain.
 The privacy contact section explains that email inquiries disclose the sender's
 email address and the information they choose to send so a response can be provided.
 
-Add the verified App Store link on the marketing page when the listing is available.
-Replace the planned-release message with “Free download” only after checking live
-storefront availability and base price. Do not hard-code the Expanded Flight price.
+The Paper Birds marketing page links to the public Mac App Store listing:
+`https://apps.apple.com/us/app/paper-birds-screen-saver/id6814753495`.
+On 2 October 2026, Apple’s US listing displayed “Free · In-App Purchases”.
+The site does not hard-code the Expanded Flight purchase price.
 Confirm the copyright owner and 2026 year in all four footers.
 
 ## Verified product and privacy claims
@@ -174,11 +175,12 @@ The source scan alone is not a review of an eventual shipping archive.
 
 ### Unverified release facts
 
-- Actual App Store listing, public availability, base price, registered IAP and
-  production purchase behavior cannot be verified from this repository.
-- Release documents specify a free app; the website says **planned** free download.
-- Native StoreKit sandbox/TestFlight purchase validation remains pending in release
-  records. Website support describes implemented UI, not a new successful payment test.
+- The public US App Store listing and free base price were verified on 2 October
+  2026. Availability and pricing in other regions may differ.
+- Registered IAP and production purchase behavior were not rechecked in this
+  website update.
+- Older release records listed StoreKit sandbox/TestFlight checks as pending.
+  They were not rechecked for this website update; App Store review has since passed.
 - Intel execution, all physical display combinations, and final archive composition
   were not validated in this task. Universal architecture support is evidenced by
   build configuration and existing release records.
@@ -204,7 +206,7 @@ directory depth. Add a product card inside `#products` on the WoodenDev root pag
 Write a distinct support page and privacy policy for that product, verify its own
 claims, and add canonical metadata using the confirmed deployment base.
 
-## Before App Store Submission
+## Release maintenance
 
 - [x] Actual GitHub Pages base URL verified by GitHub's Pages API
 - [x] Marketing URL works publicly
@@ -218,12 +220,11 @@ claims, and add canonical metadata using the confirmed deployment base.
 - [x] Internal links and principal assets tested on public deployment
 - [ ] Copyright owner/year verified
 - [ ] No TODO placeholders remain on public pages
-- [ ] App Store availability and free base price verified; real download link added
+- [x] US App Store listing and free base price verified; download link added
 - [x] Canonical URLs and appropriate absolute Open Graph image added
 
-Marketing URL: **NOT READY**. Support URL: **NOT READY**.
-Privacy Policy URL: **NOT READY**. The website is deployed; App Store submission
-still needs the final release checks listed above.
+The website is deployed and links to the approved app. The unchecked items above
+remain maintenance checks; the App Store review has passed.
 
 ## Local validation completed
 
