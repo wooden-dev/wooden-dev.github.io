@@ -140,7 +140,10 @@ email address and the information they choose to send so a response can be provi
 The Paper Birds marketing page links to the public Mac App Store listing:
 `https://apps.apple.com/us/app/paper-birds-screen-saver/id6814753495`.
 On 2 October 2026, Apple’s US listing displayed “Free · In-App Purchases”.
-The site does not hard-code the Expanded Flight purchase price.
+On 16 October 2026, the user verified Expanded Flight at US$4.99, one-time,
+with no subscription on the US storefront. The product page displays that USD
+price and links both download buttons to the US listing. Recheck the price when
+changing storefront pricing; other regions may differ.
 Confirm the copyright owner and 2026 year in all four footers.
 
 ## Verified product and privacy claims
@@ -248,3 +251,17 @@ remain maintenance checks; the App Store review has passed.
 - Export shell syntax and `git diff --check` pass.
 - Reduced-motion handling is implemented; no system preference was changed during QA.
 - App repository remains unchanged; its pre-existing untracked note is untouched.
+
+### Product-page update — 16 October 2026
+
+- Moved the existing menu-bar / screen-saver / security-lock clarification directly
+  below the hero, before the first flight preview.
+- Repeated the existing US App Store download button after Expanded Flight.
+- Added the user-verified US$4.99 one-time price, retaining free Classic and no subscription.
+- Rendered at 1280, 375 and 320px: no horizontal overflow, both download links correct,
+  images loaded, no browser errors, reduced-motion previews stayed paused.
+- Visually reviewed hero, upgrade and download layouts. Internal-reference check passed.
+- Local review only. After visual approval, review the three-file diff (`paperbirds/index.html`,
+  `css/style.css`, this README), commit it and push `main` to `origin`. The documented Pages
+  configuration publishes `main` from `/ (root)`. Verify the live product page and both
+  buttons after the Pages build. No push/deploy occurred in this session.
